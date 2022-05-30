@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Meddium editor I'm going to create it by myself -->
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    
+    <title>Document</title>
+  </head>
+  <body>
+   
+    <div class="mx-auto">
+      <nav class="bg-sky-50 flex justify-between text-gray-500 shadow-lg">
+        <div class="p-3 ml-10">
+          <a href="{% url 'home' %}"
+            ><i
+              class="fa-brands fa-hive fa-beat"
+              style="--fa-animation-duration: 2.5s"
+            ></i
+          ></a>
+        </div>
+        <div class="p-3 w-1/6 md:block hidden md:w-4/6">
+          <ul class="flex items-center justify-evenly">
+            {% comment %} TODO this should change dinamically {% endcomment %}
+            <li class="menu-item">
+              <a href="">Category A</a>
+            </li>
+            <li class="menu-item"><a href="">Category B</a></li>
+            <li class="menu-item"><a href="">Category C</a></li>
+            <li class="menu-item"><a href="">Category D</a></li>
+            <li class="menu-item"><a href="">Category E</a></li>
+          </ul>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="p-3 mr-10">
+          <div class="flex justify-between">
+            <div class="px-2">
+              <h1>{{user.username}}</h1>
+              <button id="user-menu">
+                <i class="fa-solid fa-user"></i>
+                <div
+                  id="user-info"
+                  class="hidden z-10 bg-sky-100 absolute"
+                >
+                  <div class="p-2">
+                    <p>General client information</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+            <div class="px-2">
+              <button>
+                <i class="fa-solid fa-bell"></i>
+              </button>
+            </div>
+            <div class="px-2">
+              <button id='user-options'>
+                <i class="fa-solid fa-cog"></i>
+                <div
+                  id="user-option"
+                  class="hidden z-10 bg-sky-100 absolute"
+                >
+                  <ul>
+                    <li>Welcome {{user.username}}</li>
+                    <li><a href="{% url 'blog_new' %}">New Blog</a></li>
+                    <li><a href="{% url 'blog_draft_lists' %}">Drafts</a></li>
+                    <li><a href="{% url 'logout' %}"></a>Log Out</li>
+                  </ul>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="p-3 mr-10 justify-center align-middle">
+          <a href="{% url 'login' %}" class='menu-item px-4 text-gray-700 font-semibold mx-2'>Login</a>
+          <a href="" class='border-2 border-blue-300 rounded-full bg-blue-200 pb-1 px-4 text-gray-700 font-semibold mx-2 hover:bg-blue-700 hover:text-white hover:border-transparent transition'>Sign up</a>
+        {% endif %}
+        {% comment %} This is the small size version {% endcomment %}
+        <div class="p-3 w-full md:hidden absolute z-10">
+          <div>
+            <a href="">Menu</a>
+          </div>
+          <div>
+            <ul>
+              {% comment %} TODO this should change dinamically {% endcomment %}
+              <li><a href="">Category A</a></li>
+              <li><a href="">Category B</a></li>
+              <li><a href="">Category C</a></li>
+              <li><a href="">Category D</a></li>
+              <li><a href="">Category E</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <section class='container mx-14'>      
+      {% block body_block %}
+      
+      {% endblock body_block %}
+    </section>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

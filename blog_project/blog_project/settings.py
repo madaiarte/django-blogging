@@ -14,9 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATIC_ROOT = Path.joinpath(BASE_DIR, "static")
 STATIC_BLOG = Path.joinpath(BASE_DIR, "blog_app/static")
-TEMPLATES_DIR = Path.joinpath(BASE_DIR, "templates")
 TEMPLATES_BLOG = Path.joinpath(BASE_DIR, "blog_app/templates/blog_app")
 
 
@@ -59,7 +57,7 @@ ROOT_URLCONF = "blog_project.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [TEMPLATES_DIR, TEMPLATES_BLOG],
+        "DIRS": [TEMPLATES_BLOG],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -120,7 +118,7 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
-    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    # "django.contrib.auth.hashers.ScryptPasswordHasher",
 ]
 
 

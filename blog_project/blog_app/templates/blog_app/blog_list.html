@@ -1,0 +1,15 @@
+{% extends 'blog_app/base.html' %} {% block body_block %}
+<div>
+  {% for blog in blog_list %}
+  <div class="blog">
+    <h1><a href="{% url 'blog_detail' pk=blog.pk %}">{{blog.title}}</a></h1>
+    <div class="date">
+      <p>PUblished on {{blog.published|date:'D M Y'}}</p>
+    </div>
+    <a href="{% url 'blog_detail' pk=blog.pk %}"
+      >Comments: {{ blog.approve_comments.count}}</a
+    >
+  </div>
+  {% endfor %}
+</div>
+{% endblock body_block %}

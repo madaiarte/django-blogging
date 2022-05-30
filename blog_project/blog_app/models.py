@@ -2,6 +2,7 @@ import uuid
 
 # from django.core import validators
 from django.db import models
+from django.conf import settings
 
 # from django_countries.fields import CountryField
 from django.utils import timezone
@@ -25,23 +26,7 @@ from django.urls import reverse
 #     )
 
 
-class CategoriesModel(models.Model):
-    category_name = models.CharField(max_length=100)
-    rating = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return self.category_name
-
-
 class BlogsModel(models.Model):
-    TYPE_BLOG_CHOICES = [
-        ("VD", "Video Blog"),
-        ("TX", "Text Blog"),
-        ("AU", "Podcast Blog"),
-        ("VR", "Virtual Blog"),
-        ("OT", "Other Blog"),
-    ]
-
     id = models.UUIDField(
         primary_key=True, unique=True, editable=False, default=uuid.uuid4
     )
@@ -50,13 +35,14 @@ class BlogsModel(models.Model):
     )
     subtitle = models.TextField()
     liked_by = models.UUIDField(unique=True, editable=False, null=True)
-    type_blog = models.CharField(max_length=2, choices=TYPE_BLOG_CHOICES)
     background = models.ImageField()
     create_date = models.DateTimeField(auto_now=True)
     publish_date = models.DateTimeField(blank=True, null=True)
     # user = models.ForeignKey(UsersModel, on_delete=models.CASCADE)
-    user = models.ForeignKey("auth.User", on_delete=models.DO_NOTHING)
-    category = models.OneToOneField(CategoriesModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
 
     def publish(self):
         self.publish_date = timezone.now()
@@ -72,8 +58,24 @@ class BlogsModel(models.Model):
         return self.title
 
 
+class CategoriesModel(models.Model):
+    TYPE_BLOG_CHOICES = [
+        ("VD", "Video Blog"),
+        ("TX", "Text Blog"),
+        ("AU", "Podcast Blog"),
+        ("VR", "Virtual Blog"),
+        ("OT", "Other Blog"),
+    ]
+    rating = models.PositiveIntegerField(default=0)
+    type_blog = models.CharField(max_length=2, choices=TYPE_BLOG_CHOICES)
+    blog = models.OneToOneField(BlogsModel, on_delete=models.CASCADE, primary_key=True)
+
+    def __str__(self):
+        return self.BlogsModel.title
+
+
 class CommentsModel(models.Model):
-    user = models.UUIDField(editable=False)
+    user = models.UUIDField()
     comment = models.TextField(null=True)
     create_date = models.DateTimeField(auto_now=True)
     approved_comment = models.BooleanField(default=False)

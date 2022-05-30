@@ -1,1 +1,2 @@
-@import url("../../static/css/styles.css");
+@import url("tailwind/output.css");
+@import url("../assets/css/all.css");

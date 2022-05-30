@@ -1,4 +1,22 @@
-{% extends 'base.html' %} {% block body_block %} {% load static %}
-<h1>This is home</h1>
-<script src="{% static 'js/script.js' %} "></script>
+{% extends 'blog_app/base.html' %} {% block body_block %}
+<div class="flex justify-end mt-10 mr-10">
+  <a
+    href="{% url 'blog_new' %}"
+    class="py-2 px-4 bg-blue-600 border border-blue-700 text-white rounded-tr-3xl rounded-bl-2xl hover:border-blue-500 hover:text-blue-700 hover:bg-white transition ease-in-out"
+  >
+    Add Story
+    <span class="transition ml-1"><i class="fa-solid fa-pen-fancy"></i></span>
+  </a>
+</div>
+<section>
+  <h1>Blogs</h1>
+  <ul>
+    {% for blog in blogs %}
+    <li>{{blog}} - {{blog.user}}</li>
+    {% empty %}
+    <li>No articles yet.</li>
+    {% endfor %}
+  </ul>
+</section>
+
 {% endblock body_block %}
