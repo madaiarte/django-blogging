@@ -65,11 +65,11 @@
                   id="user-option"
                   class="hidden z-10 bg-sky-100 absolute"
                 >
-                  <ul>
+                  <ul class='p-2'>
                     <li>Welcome {{user.username}}</li>
-                    <li><a href="{% url 'blog_new' %}">New Blog</a></li>
+                    <li class='w-50'><a href="{% url 'blog_new' %}">New Blog</a></li>
                     <li><a href="{% url 'blog_draft_lists' %}">Drafts</a></li>
-                    <li><a href="{% url 'logout' %}"></a>Log Out</li>
+                    <li><a href="{% url 'logout_view' %}"></a>Log Out-==</li>
                   </ul>
                 </div>
               </button>

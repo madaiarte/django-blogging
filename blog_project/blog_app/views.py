@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.urls import reverse_lazy
@@ -109,3 +110,9 @@ def blog_publish(request, pk):
     blog = get_object_or_404(BlogsModel, pk=pk)
     blog.publish()
     return redirect("blog_detail")
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect("home")
